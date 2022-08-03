@@ -46,7 +46,8 @@
         android:inputType="none"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/ThemeOverlay.Material3.TextInputEditText.FilledBox"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"

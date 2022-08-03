@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> id,title , color;
 
     CustomAdapter customAdapter;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        textView = findViewById(R.id.textView);
+
         dbHelper = new DBHelper(MainActivity.this);
         id = new ArrayList<>();
         title = new ArrayList<>();
@@ -54,8 +58,10 @@ public class MainActivity extends AppCompatActivity {
 
     void storeDataInArray(){
         Cursor cursor = dbHelper.readData();
-        if(cursor.getCount() == 0)
+        if(cursor.getCount() == 0){
+            textView.setText("No Plans Were Found");
             Toast.makeText(this,"No Data",Toast.LENGTH_SHORT).show();
+        }
         else{
             while (cursor.moveToNext()){
                 id.add(cursor.getString(0));
