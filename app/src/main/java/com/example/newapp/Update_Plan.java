@@ -20,7 +20,7 @@ import android.widget.Toast;
 public class Update_Plan extends AppCompatActivity {
 
     EditText title , color;
-    Button updateBtn ,view , deleteBtn;
+    Button updateBtn , deleteBtn;
 
     String id, Title ,Color;
     String title2 , color2;
@@ -52,22 +52,16 @@ public class Update_Plan extends AppCompatActivity {
         updateBtn = findViewById(R.id.button2);
         deleteBtn = findViewById(R.id.deleteBtn);
 
-        view = findViewById(R.id.view2);
         getIntentData();
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DBHelper dbHelper = new DBHelper(Update_Plan.this);
                 dbHelper.updateData(id , title.getText().toString().trim() , color.getText().toString().trim());
-            }
-        });
-
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
                 OpenActivity();
             }
         });
+
 
         ActionBar actionBar = getSupportActionBar();
 
