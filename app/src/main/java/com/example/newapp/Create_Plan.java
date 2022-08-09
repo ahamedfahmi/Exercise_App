@@ -19,7 +19,6 @@ public class Create_Plan extends AppCompatActivity {
 
     EditText title , color;
     Button addButton;
-    Button viewButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,20 +43,13 @@ public class Create_Plan extends AppCompatActivity {
         title = findViewById(R.id.editTextTextPersonName);
         color = findViewById(R.id.editTextTextPersonName2);
         addButton = findViewById(R.id.button);
-        viewButton = findViewById(R.id.view);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DBHelper dbHelper = new DBHelper(Create_Plan.this);
                 dbHelper.addPlan(title.getText().toString().trim(),color.getText().toString().trim());
-            }
-        });
-
-        viewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    OpenActivity();
+                OpenActivity();
             }
         });
 
