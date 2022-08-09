@@ -23,7 +23,6 @@ public class Update_Plan extends AppCompatActivity {
     Button updateBtn , deleteBtn;
 
     String id, Title ,Color;
-    String title2 , color2;
 
     String[] items =  {"red" , "blue" , "green", "white"};
 
