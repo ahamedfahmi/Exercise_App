@@ -93,7 +93,7 @@ public class Update_Plan extends AppCompatActivity {
     }
 
     public void OpenActivity(){
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this,View_Plan.class);
         startActivity(intent);
     }
 

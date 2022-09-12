@@ -16,6 +16,11 @@
         <activity
             android:name=".Update_Plan"
             android:exported="false"
+            android:parentActivityName=".View_Plan"/>
+        <activity
+            android:name=".View_Plan"
+            android:exported="false"
+            android:label="Your Plans"
             android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".Create_Plan"

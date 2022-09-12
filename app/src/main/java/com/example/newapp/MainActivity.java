@@ -1,73 +1,85 @@
 package com.example.newapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    FloatingActionButton floatingActionButton;
+    FloatingActionButton fab , fab1 , fab2;
+    Animation fabOpen  , fabClose , rotateForward , rotateBackward;
 
-    DBHelper dbHelper;
-    ArrayList<String> id,title , color;
-
-    CustomAdapter customAdapter;
-    TextView textView;
+    boolean isOpen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.front);
+        setContentView(R.layout.main_activity);
 
-        recyclerView = findViewById(R.id.recycleView);
-        floatingActionButton = findViewById(R.id.floatingActionButton);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        fab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+        fab1 = (FloatingActionButton) findViewById(R.id.floatingActionButton1);
+        fab2 = (FloatingActionButton) findViewById(R.id.floatingActionButton2);
+
+        //animation
+        fabOpen = AnimationUtils.loadAnimation(this,R.anim.fab_open);
+        fabClose = AnimationUtils.loadAnimation(this,R.anim.fab_close);
+
+        rotateForward = AnimationUtils.loadAnimation(this,R.anim.rotate_forward);
+        rotateBackward = AnimationUtils.loadAnimation(this,R.anim.rotate_backward);
+
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this , Create_Plan.class);
-                startActivity(intent);
+                animateFab();
+            }
+        });
+        fab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OpenCreate();
+            }
+        });
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OpenView();
             }
         });
 
-        textView = findViewById(R.id.textView);
-
-        dbHelper = new DBHelper(MainActivity.this);
-        id = new ArrayList<>();
-        title = new ArrayList<>();
-        color = new ArrayList<>();
-
-        storeDataInArray();
-
-        customAdapter = new CustomAdapter(MainActivity.this , id , title ,color);
-        recyclerView.setAdapter(customAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-
     }
 
-    void storeDataInArray(){
-        Cursor cursor = dbHelper.readData();
-        if(cursor.getCount() == 0){
-            textView.setText("No Plans Were Found");
-            Toast.makeText(this,"No Data",Toast.LENGTH_SHORT).show();
-        }
-        else{
-            while (cursor.moveToNext()){
-                id.add(cursor.getString(0));
-                title.add(cursor.getString(1));
-                color.add(cursor.getString(2));
-            }
+    public void OpenView(){
+        Intent intent = new Intent(this,View_Plan.class);
+        startActivity(intent);
+    }
+
+    public void OpenCreate(){
+        Intent intent = new Intent(this,Create_Plan.class);
+        startActivity(intent);
+    }
+
+    private void animateFab(){
+        if(isOpen){
+            fab.startAnimation(rotateForward);
+            fab1.startAnimation(fabClose);
+            fab2.startAnimation(fabClose);
+            fab1.setClickable(false);
+            fab2.setClickable(false);
+            isOpen=false;
+        }else{
+            fab.startAnimation(rotateBackward);
+            fab1.startAnimation(fabOpen);
+            fab2.startAnimation(fabOpen);
+            fab1.setClickable(true);
+            fab2.setClickable(true);
+            isOpen=true;
         }
     }
 }
